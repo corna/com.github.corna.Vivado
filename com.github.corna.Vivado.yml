@@ -17,6 +17,7 @@ finish-args:
   - --filesystem=xdg-desktop
   - --filesystem=xdg-download
   - --persist=.
+  - --talk-name=org.gnome.SessionManager
   - --env=LC_ALL=en_US.UTF-8
   - --env=LD_LIBRARY_PATH=/app/lib
 
