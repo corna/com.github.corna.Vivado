@@ -7,6 +7,7 @@ tags:
   - proprietary
 
 finish-args:
+  - --require-version=1.7.1
   - --share=ipc
   - --socket=x11
   - --share=network
