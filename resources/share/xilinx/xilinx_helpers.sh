@@ -77,14 +77,21 @@ function xilinx_install() {
 	# Extract the installer
 	sh "$installer_path" --noexec --target "$installer_dir"
 
+	# Get the installer version
+	local installer_version
+	installer_version=$(grep Vivado_Shortcuts_Vivado_LIN_SHORTCUT_NAME= "$installer_dir/data/dynamic_language_bundle.properties" | grep -Eo '[0-9]+\.[0-9]+')
+
 	# Change the default installation folder
 	sed -i "s|^DEFAULT_DESTINATION_FOLDER_LIN_Install=.*|DEFAULT_DESTINATION_FOLDER_LIN_Install=$XILINX_INSTALL_PATH|" "$installer_dir/data/dynamic_language_bundle.properties"
 
 	# Run the installer
 	mkdir -p "$XILINX_INSTALL_PATH"
 	"$installer_dir/xsetup"
-	rm -rf "$installer_dir"
 
+	# Apply the patch (ignoring failures)
+	"$(dirname "${BASH_SOURCE[0]}")/patch_vitis_HwSpecFile.sh" "$XILINX_INSTALL_PATH/Vitis/$installer_version" || true
+
+	rm -rf "$installer_dir"
 	xilinx_detect
 	zenity --class "$CURRENT_WM_CLASS" --width=600 --info --text "Installation is complete.\nTo allow access to the hardware devices (necessary to program them within Vivado and Vitis), run <b>cd \"$XILINX_INSTALL_PATH/Vivado/${installed_versions[0]}/data/xicom/cable_drivers/lin64/install_script/install_drivers/\" &amp;&amp; sudo ./install_drivers &amp;&amp; sudo udevadm control --reload</b>, then reconnect all the devices (if any)"
 }
