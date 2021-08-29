@@ -20,6 +20,7 @@ finish-args:
   - --talk-name=org.gnome.SessionManager
   - --env=LC_ALL=en_US.UTF-8
   - --env=LD_LIBRARY_PATH=/app/lib
+  - --env=TERMINFO=/app/share/terminfo
 
 cleanup:
   - /lib/debug
