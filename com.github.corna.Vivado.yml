@@ -48,6 +48,7 @@ modules:
       - /bin
       - /include
       - /lib/*.a
+      - /lib/*.so
     sources:
       - type: archive
         url: https://ftp.gnu.org/pub/gnu/ncurses/ncurses-6.2.tar.gz
