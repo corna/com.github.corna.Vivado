@@ -26,6 +26,9 @@ the launcher *Uninstall Xilinx Design Tools or Devices* (or run
 
 ## FAQ
 
+### When installing Vivado I get an error "unable to download installer with selected credentials", why?
+You may need to fill out an export control form for your Xilinx.com account first. Try manually downloading an installer from [here](https://www.xilinx.com/support/download.html)
+
 ### Why can't I see some of my files in Vivado?
 
 All the Xilinx tools handled by this wrapper run in a sandbox with limited
