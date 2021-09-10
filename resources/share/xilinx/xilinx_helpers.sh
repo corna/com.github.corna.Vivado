@@ -102,9 +102,17 @@ function xilinx_source_settings64() {
 	local settings64_dir
 	settings64_dir=$(mktemp -d)
 
-	# Fix the paths in .settings64*.sh (so that the installation can be freely moved)
+	# Copy the ".settings64" scripts
 	find "$XILINX_INSTALL_PATH" -maxdepth 3 -regextype posix-egrep -regex ".*/($version_escaped_dot|DocNav)/\.settings64[^/]*\.sh" -exec cp {} "$settings64_dir" \;
-	find "$settings64_dir" -type f -exec sed -i -E "s@[^:^=]+/(Vivado|Vitis|DocNav)@$XILINX_INSTALL_PATH/\1@g" {} \;
+
+	# Get the original installation folder
+	local installation_folder
+	installation_folder=$(grep "[ \t]*export XILINX_VIVADO=" "$settings64_dir/.settings64-Vivado.sh")
+	installation_folder=${installation_folder#*=}
+	installation_folder=$(dirname $(dirname "$installation_folder"))
+
+	# Fix the paths in .settings64*.sh (so that the installation can be freely moved)
+	find "$settings64_dir" -type f -exec sed -i "s^$installation_folder^$XILINX_INSTALL_PATH^g" {} \;
 
 	# Replace the absolute paths in Vivado/*/settings64.sh with relative ones
 	sed "s|source .*/.settings64|source $settings64_dir/.settings64|g" "$XILINX_INSTALL_PATH/Vivado/$1/settings64.sh" > "$settings64_dir/settings64.sh"
