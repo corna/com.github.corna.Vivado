@@ -39,7 +39,9 @@ function xilinx_install() {
 	XILINX_DOWNLOADER=$(dirname "${BASH_SOURCE[0]}")/download_vivado.py
 
 	local installer_dir
-	installer_dir=$(mktemp -d)
+	installer_dir="$XDG_DATA_HOME/xilinx-installer-tmpdir"
+	trap "rm -rf \"$installer_dir\"" EXIT
+	rm -rf "$installer_dir"
 
 	local installer_path
 
