@@ -52,8 +52,17 @@ def get_auth_token(username, password):
         opener.open(url, data=b'')
         return next(filter(lambda c: c.name == cookie, cj)).value
 
-    sso_token = get_cookie(AUTHENTICATOR_URL, {'xilinxUserId': username, 'password': password, "encrypted": "false"}, "SSOToken")
-    auth_token = get_cookie(AUTHENTICATOR_URL, {"SSOToken": sso_token}, "token")
+    try:
+        sso_token = get_cookie(AUTHENTICATOR_URL, {'xilinxUserId': username, 'password': password, "encrypted": "false"}, "SSOToken")
+        auth_token = get_cookie(AUTHENTICATOR_URL, {"SSOToken": sso_token}, "token")
+    except urllib.error.HTTPError as e:
+        if e.code == 401:
+            print("invalid credentials. Make sure the provided username and/or password are valid.")
+        elif e.code == 503:
+            print("the user profile is not complete. Complete your <a href=\"https://www.xilinx.com/myprofile/edit-profile.html\">user profile</a> to proceed with the download.")
+        else:
+            print("unknown authentication error.")
+        raise e
 
     return auth_token
 

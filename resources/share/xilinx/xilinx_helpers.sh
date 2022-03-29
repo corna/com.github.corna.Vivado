@@ -62,7 +62,7 @@ function xilinx_install() {
 
 		# Download Vivado
 		echo "$pass" | \
-			( "$XILINX_DOWNLOADER" "$user" "$installer_path" || ( zenity --class "$CURRENT_WM_CLASS" --width=400 --error --title "Download failed" --text "Unable to download the installer with the provided credentials."; exit 1 ) ) | \
+			( downloader_stdout=$("$XILINX_DOWNLOADER" "$user" "$installer_path") || ( zenity --class "$CURRENT_WM_CLASS" --width=400 --error --title "Download failed" --text "Unable to download the installer: $downloader_stdout"; exit 1 ) ) | \
 			zenity --class "$CURRENT_WM_CLASS" --width=400 --progress --title="Downloading Vivado" --text "Retrieving download information..." --auto-close 
 
 	else
