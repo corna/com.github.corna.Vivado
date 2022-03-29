@@ -45,15 +45,17 @@ def get_version(version):
 
 
 def get_auth_token(username, password):
-    params = {'xilinxUserId': username, 'password': password, "encrypted": "true"}
-    url = AUTHENTICATOR_URL + "?" + urllib.parse.urlencode(params)
+    def get_cookie(base_url, params, cookie):
+        url = base_url + "?" + urllib.parse.urlencode(params)
+        cj = http.cookiejar.CookieJar()
+        opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))
+        opener.open(url, data=b'')
+        return next(filter(lambda c: c.name == cookie, cj)).value
 
-    cj = http.cookiejar.CookieJar()
-    opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))
-    opener.open(url, data=b'')
-    token_cookie = next(filter(lambda c: c.name == "token", cj))
+    sso_token = get_cookie(AUTHENTICATOR_URL, {'xilinxUserId': username, 'password': password, "encrypted": "false"}, "SSOToken")
+    auth_token = get_cookie(AUTHENTICATOR_URL, {"SSOToken": sso_token}, "token")
 
-    return token_cookie.value
+    return auth_token
 
 
 def get_download_link(token, filename, platform, version):

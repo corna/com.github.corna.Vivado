@@ -42,6 +42,7 @@ function xilinx_install() {
 	installer_dir="$XDG_DATA_HOME/xilinx-installer-tmpdir"
 	trap "rm -rf \"$installer_dir\"" RETURN
 	rm -rf "$installer_dir"
+	mkdir "$installer_dir"
 
 	local installer_path
 
