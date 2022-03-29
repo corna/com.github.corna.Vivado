@@ -111,7 +111,7 @@ function xilinx_source_settings64() {
 	local installation_folder
 	installation_folder=$(grep "[ \t]*export XILINX_VIVADO=" "$settings64_dir/.settings64-Vivado.sh")
 	installation_folder=${installation_folder#*=}
-	installation_folder=$(dirname $(dirname "$installation_folder"))
+	installation_folder=$(dirname "$(dirname "$installation_folder")")
 
 	# Fix the paths in .settings64*.sh (so that the installation can be freely moved)
 	find "$settings64_dir" -type f -exec sed -i "s^$installation_folder^$XILINX_INSTALL_PATH^g" {} \;
