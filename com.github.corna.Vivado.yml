@@ -93,6 +93,8 @@ modules:
     buildsystem: simple
     build-commands:
       - cp -Pr --preserve=mode,links ./* /app
+    cleanup:
+      - .*
     sources:
       - type: dir
         path: resources
