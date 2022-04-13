@@ -89,6 +89,13 @@ modules:
         url: https://dl.suckless.org/st/st-0.8.5.tar.gz
         sha256: ea6832203ed02ff74182bcb8adaa9ec454c8f989e79232cb859665e2f544ab37
 
+  - name: zenity
+    buildsystem: meson
+    sources:
+      - type: archive
+        url: https://download.gnome.org/sources/zenity/3.42/zenity-3.42.0.tar.xz
+        sha256: c24c7fe6bb43163ced8adf232d583b2e013d3ba6c28deb5fcf807985e3deb5ef
+
   - name: xilinx
     buildsystem: simple
     build-commands:
