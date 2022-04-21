@@ -29,8 +29,8 @@ the launcher *Uninstall Xilinx Design Tools or Devices* (or run
 ### Why can't I see some of my files in Vivado?
 
 All the Xilinx tools handled by this wrapper run in a sandbox with limited
-filesystem access, only your documents, downloads and desktop folders are
-visibile.
+filesystem access, only your documents, downloads and desktop folders (plus
+the `~/.Xilinx` directory) are visibile to them.
 Either work in those directories or override the default permission (with
 `flatpak override com.github.corna.Vivado --filesystem=<path_here>`).
 
