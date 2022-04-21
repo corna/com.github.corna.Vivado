@@ -38,8 +38,9 @@ Either work in those directories or override the default permission (with
 
 Same as before, make sure that the project is in one of the allowed folders.
 
-### I have created a project outside Desktop or Documents: where are they?
-You can find the sandboxed filesystem in `~/var/app/com.github.corna.Vivado/`.
+### I have created a project outside the exposed folders: where are they?
+
+You can find the sandboxed filesystem in `~/.var/app/com.github.corna.Vivado/`.
 
 ### I can not access the hardware devices
 
