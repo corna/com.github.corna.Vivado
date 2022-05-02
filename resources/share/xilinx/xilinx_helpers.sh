@@ -112,9 +112,16 @@ function xilinx_install() {
 	# Change the default installation folder
 	sed -i "s|^DEFAULT_DESTINATION_FOLDER_LIN_Install=.*|DEFAULT_DESTINATION_FOLDER_LIN_Install=$XILINX_INSTALL_PATH|" "$installer_dir/installer/data/dynamic_language_bundle.properties"
 
-	# Run the installer
+	# Run the installer further sandboxed, for example to avoid the creation of broken desktop files in the user's home
+	# Some old versions fail if the .local/share/applications and Desktop folders are missing, so create them
 	mkdir -p "$XILINX_INSTALL_PATH"
-	"$installer_dir/installer/xsetup"
+	flatpak-spawn --sandbox \
+		--directory="$HOME" \
+		--sandbox-flag=share-display \
+		--sandbox-expose-path="$HOME/.Xilinx" \
+		--sandbox-expose-path="$XILINX_INSTALL_PATH" \
+		--sandbox-expose-path="$installer_dir/installer" \
+		bash -c "mkdir -p .local/share/applications && mkdir -p Desktop && bash \"$installer_dir/installer/xsetup\""
 
 	# Apply the patch (ignoring failures)
 	"$(dirname "${BASH_SOURCE[0]}")/patch_vitis_HwSpecFile.sh" "$XILINX_INSTALL_PATH/Vitis/$installer_version" || true
