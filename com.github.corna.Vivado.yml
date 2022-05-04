@@ -93,8 +93,10 @@ modules:
     buildsystem: meson
     sources:
       - type: archive
-        url: https://gitlab.gnome.org/GNOME/zenity/-/archive/3.42.0/zenity-3.42.0.tar.bz2
-        sha256: aea33e30fd653ed249979a5a9f555591f4dfdc2f831e8dd7bec09c95c8353cc9
+        url: https://gitlab.gnome.org/GNOME/zenity/-/archive/3.42.1/zenity-3.42.1.tar.bz2
+        sha256: dd10fd4b12ddc97ad350879ea01a18fe679cdc5fd74cc9b5ee34e7a718136948
+      - type: patch
+        path: patches/zenity/0001-Replace-username-with-e-mail-in-the-password-dialogs.patch
 
   - name: python3-beautifulsoup4
     buildsystem: simple
