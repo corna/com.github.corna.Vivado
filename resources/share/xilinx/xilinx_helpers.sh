@@ -161,10 +161,10 @@ function xilinx_source_settings64() {
 }
 
 function xilinx_get_cmd_abs_path() {
-	PATH=$(echo "$PATH" | sed -E 's@(^|:)/app/bin/?($|:)@:@g')
+	local path_no_app_bin
+	path_no_app_bin=$(echo "$PATH" | sed -E 's@(^|:)/app/bin/?($|:)@:@g')
 	export xilinx_cmd_abs_path
-	xilinx_cmd_abs_path="$(which "$1")" || (zenity --class "$CURRENT_WM_CLASS" --width=400 --error --title "Missing software" --text "$2"; false)
-	PATH=$PATH:/app/bin
+	xilinx_cmd_abs_path="$(env PATH="$path_no_app_bin" which "$1")" || (zenity --class "$CURRENT_WM_CLASS" --width=400 --error --title "Missing software" --text "$2"; false)
 }
 
 function xilinx_versioned_install_if_needed() {
