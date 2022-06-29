@@ -7,4 +7,5 @@ export CURRENT_WM_CLASS=vitis-hls-cmd
 . /app/share/xilinx/xilinx_helpers.sh
 
 xilinx_versioned_install_if_needed vitis_hls
+/app/share/xilinx/patch_vitis_hls_autopilot_init.sh
 /app/bin/st -t "Xilinx Vitis HLS Command Prompt" -c "$CURRENT_WM_CLASS" "$xilinx_cmd_abs_path" -i "$@"
