@@ -125,9 +125,19 @@ function xilinx_install() {
 
 	# Apply the patch (ignoring failures)
 	"$(dirname "${BASH_SOURCE[0]}")/patch_vitis_HwSpecFile.sh" "$XILINX_INSTALL_PATH/Vitis/$installer_version" || true
+	
+	# Fix non anti-aliased font on kde 
+	xsettingsd="$HOME/.config/xsettingsd/xsettingsd.conf"
+	if [[ -f "$xsettingsd" ]]; then
+    		if ! grep -q "Xft/Antialias" "$xsettingsd"; then
+        	echo "Xft/Antialias 1" >> "$xsettingsd"
+	    	zenity --class "$CURRENT_WM_CLASS" --width=600 --info --text "Make sure to restart the system to apply all the changes!" 
+	    fi
+	fi
 
 	xilinx_detect
 	zenity --class "$CURRENT_WM_CLASS" --width=600 --info --text "Installation is complete.\nTo allow access to the hardware devices (necessary to program them within Vivado and Vitis), run <b>cd \"$XILINX_INSTALL_PATH/Vivado/${installed_versions[0]}/data/xicom/cable_drivers/lin64/install_script/install_drivers/\" &amp;&amp; sudo ./install_drivers &amp;&amp; sudo udevadm control --reload</b>, then reconnect all the devices (if any)"
+	
 }
 
 function xilinx_source_settings64() {
