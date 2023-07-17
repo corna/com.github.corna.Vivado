@@ -51,8 +51,8 @@ modules:
       - /lib/*.so
     sources:
       - type: archive
-        url: https://ftp.gnu.org/pub/gnu/ncurses/ncurses-6.3.tar.gz
-        sha256: 97fc51ac2b085d4cde31ef4d2c3122c21abc217e9090a43a30fc5ec21684e059
+        url: https://ftp.gnu.org/pub/gnu/ncurses/ncurses-6.4.tar.gz
+        sha256: 6931283d9ac87c5073f30b6290c4c75f21632bb4fc3603ac8100812bed248159
 
   - name: xlsclients
     sources:
@@ -86,29 +86,31 @@ modules:
         make install
     sources:
       - type: archive
-        url: https://dl.suckless.org/st/st-0.8.5.tar.gz
-        sha256: ea6832203ed02ff74182bcb8adaa9ec454c8f989e79232cb859665e2f544ab37
+        url: https://dl.suckless.org/st/st-0.9.tar.gz
+        sha256: f36359799734eae785becb374063f0be833cf22f88b4f169cd251b99324e08e7
 
   - name: zenity
     buildsystem: meson
+    build-commands:
+      - mkdir -p ${FLATPAK_DEST}/share/icons/hicolor
     sources:
       - type: archive
-        url: https://gitlab.gnome.org/GNOME/zenity/-/archive/3.42.1/zenity-3.42.1.tar.bz2
-        sha256: dd10fd4b12ddc97ad350879ea01a18fe679cdc5fd74cc9b5ee34e7a718136948
+        url: https://gitlab.gnome.org/GNOME/zenity/-/archive/3.44.1/zenity-3.44.1.tar.bz2
+        sha256: 24b9f8078996be0c401a3c0c84a962ce216c83895d8ccdc5f2a247ee38f580cf
       - type: patch
         path: patches/zenity/0001-Replace-username-with-e-mail-in-the-password-dialogs.patch
 
   - name: python3-beautifulsoup4
     buildsystem: simple
     build-commands:
-      - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}" --prefix=/app beautifulsoup4 --no-build-isolation
+      - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} "beautifulsoup4" --no-build-isolation
     sources:
       - type: file
-        url: https://files.pythonhosted.org/packages/16/e3/4ad79882b92617e3a4a0df1960d6bce08edfb637737ac5c3f3ba29022e25/soupsieve-2.3.2.post1-py3-none-any.whl
-        sha256: 3b2503d3c7084a42b1ebd08116e5f81aadfaea95863628c80a3b774a11b7c759
+        url: https://files.pythonhosted.org/packages/57/f4/a69c20ee4f660081a7dedb1ac57f29be9378e04edfcb90c526b923d4bebc/beautifulsoup4-4.12.2-py3-none-any.whl
+        sha256: bd2520ca0d9d7d12694a53d44ac482d181b4ec1888909b035a3dbf40d0f57d4a
       - type: file
-        url: https://files.pythonhosted.org/packages/9c/d8/909c4089dbe4ade9f9705f143c9f13f065049a9d5e7d34c828aefdd0a97c/beautifulsoup4-4.11.1-py3-none-any.whl
-        sha256: 58d5c3d29f5a36ffeb94f02f0d786cd53014cf9b3b3951d42e0080d8a9498d30
+        url: https://files.pythonhosted.org/packages/49/37/673d6490efc51ec46d198c75903d99de59baffdd47aea3d071b80a9e4e89/soupsieve-2.4.1-py3-none-any.whl
+        sha256: 1c1bfee6819544a3447586c889157365a27e10d88cde3ad3da0cf0ddf646feb8
 
   - name: xilinx
     buildsystem: simple
