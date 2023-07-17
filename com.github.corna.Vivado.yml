@@ -23,7 +23,6 @@ finish-args:
   - --env=TERMINFO=/app/share/terminfo
 
 cleanup:
-  - /lib/debug
   - /lib/pkgconfig
   - /share/man
 
