@@ -70,8 +70,8 @@ modules:
       - /usr
     sources:
       - type: archive
-        url: https://people.redhat.com/~dhowells/keyutils/keyutils-1.6.1.tar.bz2
-        sha256: c8b15722ae51d95b9ad76cc6d49a4c2cc19b0c60f72f61fb9bf43eea7cbd64ce
+        url: https://git.kernel.org/pub/scm/linux/kernel/git/dhowells/keyutils.git/snapshot/keyutils-1.6.3.tar.gz
+        sha256: a61d5706136ae4c05bd48f86186bcfdbd88dd8bd5107e3e195c924cfc1b39bb4
 
   - name: libxcrypt
     config-opts:
