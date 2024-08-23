@@ -1,6 +1,6 @@
 app-id: com.github.corna.Vivado
 runtime: org.gnome.Sdk
-runtime-version: '44'
+runtime-version: '46'
 sdk: org.gnome.Sdk
 command: vivado
 tags:
@@ -50,14 +50,14 @@ modules:
       - /lib/*.so
     sources:
       - type: archive
-        url: https://ftp.gnu.org/pub/gnu/ncurses/ncurses-6.4.tar.gz
-        sha256: 6931283d9ac87c5073f30b6290c4c75f21632bb4fc3603ac8100812bed248159
+        url: https://ftp.gnu.org/pub/gnu/ncurses/ncurses-6.5.tar.gz
+        sha256: 136d91bc269a9a5785e5f9e980bc76ab57428f604ce3e5a5a90cebc767971cc6
 
   - name: xlsclients
     sources:
       - type: archive
-        url: https://xorg.freedesktop.org/archive/individual/app/xlsclients-1.1.4.tar.bz2
-        sha256: 773f2af49c7ea2c44fba4213bee64325875c1b3c9bc4bbcd8dac9261751809c1
+        url: https://xorg.freedesktop.org/archive/individual/app/xlsclients-1.1.5.tar.xz
+        sha256: 68baee57e70250ac4a7759fb78221831f97d88bc8e51dcc2e64eb3f8ca56bae3
 
   - name: keyutils
     buildsystem: simple
@@ -73,6 +73,23 @@ modules:
         url: https://people.redhat.com/~dhowells/keyutils/keyutils-1.6.1.tar.bz2
         sha256: c8b15722ae51d95b9ad76cc6d49a4c2cc19b0c60f72f61fb9bf43eea7cbd64ce
 
+  - name: libxcrypt
+    config-opts:
+      - --enable-static=no
+      - --enable-obsolete-api=yes
+    sources:
+      - type: archive
+        url: https://github.com/besser82/libxcrypt/releases/download/v4.4.36/libxcrypt-4.4.36.tar.xz
+        sha256: e5e1f4caee0a01de2aee26e3138807d6d3ca2b8e67287966d1fefd65e1fd8943
+
+  - name: libyaml
+    config-opts:
+      - --enable-static=no
+    sources:
+      - type: archive
+        url: https://github.com/yaml/libyaml/releases/download/0.2.5/yaml-0.2.5.tar.gz
+        sha256: c642ae9b75fee120b2d96c712538bd2cf283228d2337df2cf2988e3c02678ef4
+
   - name: st
     buildsystem: simple
     build-commands:
@@ -85,8 +102,8 @@ modules:
         make install
     sources:
       - type: archive
-        url: https://dl.suckless.org/st/st-0.9.tar.gz
-        sha256: f36359799734eae785becb374063f0be833cf22f88b4f169cd251b99324e08e7
+        url: https://dl.suckless.org/st/st-0.9.2.tar.gz
+        sha256: 6b215d4f472b21d6232f30f221117a777e24bcfee68955ddefb7426467f9494b
 
   - name: zenity
     buildsystem: meson
@@ -94,8 +111,8 @@ modules:
       - mkdir -p ${FLATPAK_DEST}/share/icons/hicolor
     sources:
       - type: archive
-        url: https://gitlab.gnome.org/GNOME/zenity/-/archive/3.44.1/zenity-3.44.1.tar.bz2
-        sha256: 24b9f8078996be0c401a3c0c84a962ce216c83895d8ccdc5f2a247ee38f580cf
+        url: https://gitlab.gnome.org/GNOME/zenity/-/archive/3.44.4/zenity-3.44.4.tar.bz2
+        sha256: 954595eafc400cb0eea8bcd35db2a5b484af9d306e4930564414bd48bd313d0a
       - type: patch
         path: patches/zenity/0001-Replace-username-with-e-mail-in-the-password-dialogs.patch
 
@@ -105,11 +122,20 @@ modules:
       - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} "beautifulsoup4" --no-build-isolation
     sources:
       - type: file
-        url: https://files.pythonhosted.org/packages/57/f4/a69c20ee4f660081a7dedb1ac57f29be9378e04edfcb90c526b923d4bebc/beautifulsoup4-4.12.2-py3-none-any.whl
-        sha256: bd2520ca0d9d7d12694a53d44ac482d181b4ec1888909b035a3dbf40d0f57d4a
+        url: https://files.pythonhosted.org/packages/b1/fe/e8c672695b37eecc5cbf43e1d0638d88d66ba3a44c4d321c796f4e59167f/beautifulsoup4-4.12.3-py3-none-any.whl
+        sha256: b80878c9f40111313e55da8ba20bdba06d8fa3969fc68304167741bbf9e082ed
       - type: file
-        url: https://files.pythonhosted.org/packages/49/37/673d6490efc51ec46d198c75903d99de59baffdd47aea3d071b80a9e4e89/soupsieve-2.4.1-py3-none-any.whl
-        sha256: 1c1bfee6819544a3447586c889157365a27e10d88cde3ad3da0cf0ddf646feb8
+        url: https://files.pythonhosted.org/packages/d1/c2/fe97d779f3ef3b15f05c94a2f1e3d21732574ed441687474db9d342a7315/soupsieve-2.6-py3-none-any.whl
+        sha256: e72c4ff06e4fb6e4b5a9f0f55fe6e81514581fca1515028625d0f299c602ccc9
+
+  - name: icons
+    buildsystem: simple
+    build-commands:
+      - cp -Pr --preserve=mode,links ./* /app/share/icons
+    sources:
+      - type: archive
+        url: https://github.com/corna/com.github.corna.Vivado.icons/archive/5923e7a53107f3ab5169add2abd9e579ada6ffd7.tar.gz
+        sha256: 0ecce8c21169dee957fcfbada8d6a0bd370ae067df87b13682092d8bbb40309d
 
   - name: xilinx
     buildsystem: simple
