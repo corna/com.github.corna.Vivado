@@ -39,4 +39,5 @@
       <caption>Xilinx Vivado Block Design view</caption>
     </screenshot>
   </screenshots>
+  <launchable type="desktop-id">com.github.corna.Vivado.desktop</launchable>
 </component>
